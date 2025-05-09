@@ -1,27 +1,34 @@
 package com.tuhotelmascotas.service;
 
-import com.tuhotelmascotas.model.*;
-import com.tuhotelmascotas.repository.MascotaRepository;
+import com.tuhotelmascotas.model.Reserva;
+import com.tuhotelmascotas.model.Servicio;
+import com.tuhotelmascotas.model.ServicioReserva;
 import com.tuhotelmascotas.repository.ReservaRepository;
-
-import java.util.List;
-import java.util.Optional;
-
+import com.tuhotelmascotas.repository.ServicioReservaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReservaService {
 
-    private final ReservaRepository reservaRepository;
+    @Autowired
+    private ReservaRepository reservaRepo;
 
     @Autowired
-    public ReservaService(ReservaRepository reservaRepository) {
-        this.reservaRepository = reservaRepository;
+    private ServicioReservaRepository srRepo;
+
+    /** c. Crear una reserva */
+    public Reserva crearReserva(Reserva reserva) {
+        return reservaRepo.save(reserva);
     }
 
-    public Reserva crearReserva(Reserva reserva) {
-        return reservaRepository.save(reserva);
+    /** e. Listar servicios de una reserva */
+    public List<Servicio> listarServiciosDeReserva(Integer reservaId) {
+        return srRepo.findByReservaId(reservaId).stream()
+                     .map(ServicioReserva::getServicio)
+                     .collect(Collectors.toList());
     }
 }
-

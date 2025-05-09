@@ -1,27 +1,26 @@
 package com.tuhotelmascotas.service;
 
-import com.tuhotelmascotas.model.*;
+import com.tuhotelmascotas.model.Mascota;
 import com.tuhotelmascotas.repository.MascotaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-
 @Service
 public class MascotaService {
 
-    private final MascotaRepository mascotaRepository;
-
     @Autowired
-    public MascotaService(MascotaRepository mascotaRepository) {
-        this.mascotaRepository = mascotaRepository;
+    private MascotaRepository mascotaRepo;
+
+    /** b. Buscar mascota por ID */
+    public Optional<Mascota> buscarPorId(Integer id) {
+        return mascotaRepo.findById(id);
     }
 
-    public Optional<Mascota> buscarMascotaPorId(int id) {
-        return mascotaRepository.findById(id);
+    /** g. Listar mascotas de un usuario */
+    public List<Mascota> listarPorUsuario(Integer usuarioId) {
+        return (List<Mascota>) mascotaRepo.findByClienteId(usuarioId);
     }
 }
-

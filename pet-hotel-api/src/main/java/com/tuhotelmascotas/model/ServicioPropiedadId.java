@@ -6,6 +6,9 @@ import java.util.Objects;
 public class ServicioPropiedadId implements Serializable {
     private Integer propiedadId;
     private Integer servicioId;
+	public ServicioPropiedadId(Integer propiedadId2, Integer servicioId2) {
+		// TODO Auto-generated constructor stub
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(propiedadId, servicioId);
